@@ -5,6 +5,7 @@ ML4B SoSe 2026 — FAU Nürnberg, Lehrstuhl für Wirtschaftsinformatik
 Goal: Gym exercise recognition from Apple Watch sensor data (accelerometer, gyroscope) using Machine Learning.
 Methodology: CRISP-DM (Business Understanding → Data Understanding → Data Preparation → Modeling → Evaluation → Deployment)
 Stack: Python 3.11, uv, scikit-learn, Streamlit, Jupyter
+Primary dataset: RecoFit (Microsoft Research), MATLAB .mat format, 50 Hz, wrist-worn, loaded with `scipy.io.loadmat(path, simplify_cells=True)`
 
 ## Project Structure
 - `app/` → Streamlit web application
@@ -44,7 +45,8 @@ Stack: Python 3.11, uv, scikit-learn, Streamlit, Jupyter
 - Always keep `STRUCTURE.md` up to date when folders, files or naming conventions change. If a new folder or module is added, update `STRUCTURE.md` immediately in the same commit.
 
 ## When Adding New Code
-1. Write function signature with type hints and docstring first
+1. Never hardcode data paths — always use `pathlib.Path` relative to project root or import from `src/ml4b/utils/config.py`
+2. Write function signature with type hints and docstring first
 2. Then implementation
 3. Then at least one test in tests/
 4. Run `uv run ruff format .` and `uv run ruff check .` before committing

@@ -41,6 +41,7 @@ Stack: Python 3.11, uv, scikit-learn, Streamlit, Jupyter
 - Every CRISP-DM phase gets its own notebook AND a corresponding docs entry
 - When writing new code, always update docs/architecture/architecture.md if the structure changes
 - ADR (Architecture Decision Records) in docs/decisions/ for every major technical decision
+- Always keep `STRUCTURE.md` up to date when folders, files or naming conventions change. If a new folder or module is added, update `STRUCTURE.md` immediately in the same commit.
 
 ## When Adding New Code
 1. Write function signature with type hints and docstring first

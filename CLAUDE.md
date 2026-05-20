@@ -1,11 +1,12 @@
 # CLAUDE.md — Master Instructions for Claude Code
 
 ## Project Context
-ML4B SoSe 2026 — FAU Nürnberg, Lehrstuhl für Wirtschaftsinformatik
-Goal: Gym exercise recognition from Apple Watch sensor data (accelerometer, gyroscope, 50Hz) using Machine Learning.
-Methodology: CRISP-DM (Business Understanding → Data Understanding → Data Preparation → Modeling → Evaluation → Deployment)
-Stack: Python 3.11, uv, scikit-learn, Streamlit, Jupyter
-Primary dataset: RecoFit (Microsoft), MATLAB .mat format, 50Hz, wrist-worn, loaded with scipy.io.loadmat
+
+- **University:** FAU Nürnberg, Lehrstuhl für Wirtschaftsinformatik — ML4B SoSe 2026
+- **Goal:** Gym exercise recognition from Apple Watch sensor data (accelerometer, gyroscope, 50Hz) using Machine Learning
+- **Methodology:** CRISP-DM (Business Understanding → Data Understanding → Data Preparation → Modeling → Evaluation → Deployment)
+- **Stack:** Python 3.11, uv, scikit-learn, Streamlit, Jupyter
+- **Dataset:** RecoFit (Microsoft), MATLAB .mat format, 50Hz, wrist-worn, loaded with `scipy.io.loadmat`
 
 ## Handover Requirement
 This project must be fully handover-ready at all times. A new team with no prior knowledge must be able to:
@@ -76,7 +77,6 @@ src/ml4b/       → Reusable Python package (importable as from ml4b import ...)
 tests/          → Unit tests mirroring src/ml4b/ structure
 docs/           → All documentation (arc42, ADRs, CRISP-DM log, data dictionary)
 reports/        → Generated figures and result summaries (not in git)
-Course_Files/   → University materials, read-only, never modify
 ```
 
 ## Code Rules
@@ -87,7 +87,6 @@ Course_Files/   → University materials, read-only, never modify
 - Formatter: ruff (`uv run ruff format .`)
 - Linter: ruff (`uv run ruff check .`)
 - Random seeds: always set `random_state=42` for reproducibility
-- Never import from `Course_Files/`
 - No secrets or credentials in code — use `.env` and `python-dotenv`
 
 ## Git Rules

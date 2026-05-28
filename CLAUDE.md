@@ -8,6 +8,41 @@
 - **Stack:** Python 3.11, uv, scikit-learn, Streamlit, Jupyter
 - **Dataset:** RecoFit (Microsoft), MATLAB .mat format, 50Hz, wrist-worn, loaded with `scipy.io.loadmat`
 
+## End Goal — Always Keep This in Mind
+Every task, every decision, every line of code must serve this final deliverable:
+
+**A fully functional Streamlit web application that:**
+1. Accepts a CSV file upload from Sensor Logger (Apple Watch)
+2. Preprocesses the sensor data through the same pipeline used in training
+   (sliding window → feature extraction → model prediction)
+3. Displays the recognized exercise per time window with confidence score
+4. Shows model performance metrics (accuracy, confusion matrix, F1 per class)
+5. Runs with a single command: `uv run streamlit run app/streamlit_app.py`
+6. Can be handed over to a new team who can understand, run, and extend it
+   using only the repository
+
+**Before starting any task, ask:**
+- Does this bring us closer to the working Streamlit app?
+- Will the code I write be usable directly in the app pipeline?
+- Is the preprocessing I implement compatible with what Sensor Logger exports?
+
+**The pipeline that connects everything:**
+```
+Sensor Logger CSV (Apple Watch)
+↓
+src/ml4b/data/preprocessing.py   ← same code in training AND app
+↓
+src/ml4b/data/features.py        ← same code in training AND app
+↓
+models/saved/best_model.joblib   ← trained once, loaded by app
+↓
+app/streamlit_app.py             ← final deliverable
+```
+
+**The single most important architectural rule:**
+Training pipeline and app pipeline must use identical preprocessing code.
+Never duplicate logic — always import from `src/ml4b/`.
+
 ## Handover Requirement
 This project must be fully handover-ready at all times. A new team with no prior knowledge must be able to:
 1. Understand what the project does → README.md + docs/business_understanding/
@@ -141,3 +176,43 @@ After completing, show only:
 - Commit message used
 - Any ⚠️ or ❌ items found during review
 - Do NOT output full file contents unless explicitly requested.
+
+## Token Efficiency — Always Follow These Rules
+
+### Output
+After every task, show ONLY:
+1. List of changed files
+2. Commit message used
+3. Reviewer output (✅ ⚠️ ❌ 📝 🤝)
+Never show full file contents unless explicitly asked with "show me the full content of X".
+
+### Scope
+- Never read the entire project to answer a focused question
+- Always work on explicitly named files and line numbers
+- Never say "let me look at the whole project" — ask for the specific file instead
+- Bad: "Look at the project and fix the bug"
+- Good: "Fix the bug in src/ml4b/data/loader.py line 42"
+
+### Agent Selection
+Always use the most focused agent for the task:
+- documenter agent → only loads .md context, no code
+- data_scientist agent → only loads src/ and notebooks/ context
+- reviewer agent → only loads the specific file being reviewed
+Never use a general prompt when a specialist agent suffices.
+
+### Task Size
+Split large tasks into focused prompts:
+- Max one module per prompt (e.g. only loader.py, not the entire pipeline)
+- Docs updates are a separate prompt from code changes
+- Reviews are a separate prompt from implementations
+
+### Model Selection
+- Simple fixes, typos, small .md edits → use Haiku
+- Standard coding, notebook work, doc updates → use Sonnet
+- Complex architecture decisions, difficult bugs, pipeline design → use Opus
+
+### Session Management
+- Run /compact every 5-10 prompts or at the start of a new session
+- At the start of every new session, begin with:
+  "Read CLAUDE.md and agents/[relevant_agent].md only. Then: [task]"
+- Never assume Claude remembers previous sessions
